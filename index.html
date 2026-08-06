@@ -74,14 +74,15 @@
         width: min(1120px, 100%);
         margin: 0 auto;
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 280px;
+        grid-template-columns: minmax(0, 1fr) 300px;
         gap: 22px;
         align-items: start;
       }
 
       .card,
       .ladder-card,
-      .sound-panel {
+      .sound-panel,
+      .info-card {
         background: rgba(16, 35, 29, 0.94);
         border: 1px solid var(--line);
         box-shadow: 0 0 35px rgba(46, 155, 120, 0.11);
@@ -94,7 +95,8 @@
 
       .eyebrow,
       .ladder-title,
-      .sound-title {
+      .sound-title,
+      .mini-title {
         margin: 0;
         color: var(--gold-bright);
         font-family: "JetBrains Mono", monospace;
@@ -188,6 +190,51 @@
         font-size: 9px;
         letter-spacing: 0.06em;
         text-transform: uppercase;
+      }
+
+      .info-strip {
+        margin-top: 22px;
+      }
+
+      .info-card {
+        padding: 24px;
+      }
+
+      .mini-title {
+        margin-bottom: 14px;
+      }
+
+      .link-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .cat-link {
+        display: flex;
+        min-height: 56px;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+        color: var(--parchment);
+        background: rgba(23, 49, 41, 0.72);
+        border: 1px solid var(--line);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        font-weight: 700;
+        line-height: 1.45;
+        letter-spacing: 0.08em;
+        text-align: center;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: 0.15s ease;
+      }
+
+      .cat-link:hover {
+        color: var(--void);
+        background: var(--gold);
+        border-color: var(--gold);
+        box-shadow: 0 0 18px rgba(198, 155, 85, 0.22);
       }
 
       .sound-panel {
@@ -312,7 +359,7 @@
       }
 
       .ladder {
-        max-height: 600px;
+        max-height: 690px;
         margin-left: 8px;
         padding-right: 8px;
         padding-left: 28px;
@@ -361,6 +408,18 @@
         background: var(--panel);
       }
 
+      .step.milestone::before {
+        border-color: var(--gold);
+        background: var(--panel);
+        box-shadow: 0 0 12px rgba(198, 155, 85, 0.35);
+      }
+
+      .step.milestone.past::before {
+        border-color: var(--emerald-bright);
+        background: var(--emerald-bright);
+        box-shadow: 0 0 12px rgba(46, 155, 120, 0.45);
+      }
+
       .step.cat-day::before {
         border-color: var(--gold);
         background: var(--gold);
@@ -382,13 +441,36 @@
         color: var(--parchment-dim);
         font-family: "JetBrains Mono", monospace;
         font-size: 9px;
+        line-height: 1.45;
         letter-spacing: 0.08em;
         text-transform: uppercase;
       }
 
       .step.today .step-date,
-      .step.cat-day .step-date {
+      .step.cat-day .step-date,
+      .step.milestone .step-date {
         color: var(--gold-bright);
+      }
+
+      .step.milestone.past .step-date {
+        color: var(--emerald-bright);
+      }
+
+      .milestone-tag {
+        display: inline-block;
+        margin-top: 7px;
+        padding: 4px 7px;
+        color: var(--void);
+        background: var(--gold);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 7px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .step.milestone.past .milestone-tag {
+        background: var(--emerald-bright);
       }
 
       .weeks-left {
@@ -407,138 +489,17 @@
         font-size: 21px;
       }
 
-        .info-strip {
-          margin-top: 22px;
-          display: grid;
-          grid-template-columns: 0.75fr 1.25fr;
-          gap: 22px;
-        }
-  
-        .info-card {
-          padding: 24px;
-          background: rgba(16, 35, 29, 0.94);
-          border: 1px solid var(--line);
-          box-shadow: 0 0 35px rgba(46, 155, 120, 0.11);
-        }
-  
-        .mini-title {
-          margin: 0 0 14px;
-          color: var(--gold-bright);
-          font-family: "JetBrains Mono", monospace;
-          font-size: 10px;
-          font-weight: 600;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-        }
-  
-        .link-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 10px;
-        }
-  
-        .cat-link {
-          display: flex;
-          min-height: 54px;
-          align-items: center;
-          justify-content: center;
-          padding: 12px;
-          color: var(--parchment);
-          background: rgba(23, 49, 41, 0.72);
-          border: 1px solid var(--line);
-          font-family: "JetBrains Mono", monospace;
-          font-size: 9px;
-          font-weight: 700;
-          line-height: 1.45;
-          letter-spacing: 0.08em;
-          text-align: center;
-          text-decoration: none;
-          text-transform: uppercase;
-          transition: 0.15s ease;
-        }
-  
-        .cat-link:hover {
-          color: var(--void);
-          background: var(--gold);
-          border-color: var(--gold);
-          box-shadow: 0 0 18px rgba(198, 155, 85, 0.22);
-        }
-  
-        .timeline-row {
-          display: grid;
-          grid-template-columns: repeat(6, minmax(120px, 1fr));
-          gap: 10px;
-          overflow-x: auto;
-          padding-bottom: 4px;
-        }
-  
-        .timeline-row::-webkit-scrollbar {
-          height: 5px;
-        }
-  
-        .timeline-row::-webkit-scrollbar-track {
-          background: var(--panel-raised);
-        }
-  
-        .timeline-row::-webkit-scrollbar-thumb {
-          background: var(--emerald);
-        }
-  
-        .timeline-item {
-          min-width: 120px;
-          padding: 12px;
-          background: rgba(23, 49, 41, 0.5);
-          border: 1px solid var(--line);
-        }
-  
-        .timeline-date {
-          display: block;
-          color: var(--gold-bright);
-          font-family: "JetBrains Mono", monospace;
-          font-size: 10px;
-          font-weight: 700;
-          line-height: 1.45;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-  
-        .timeline-label {
-          display: block;
-          margin-top: 6px;
-          color: var(--parchment-dim);
-          font-family: "JetBrains Mono", monospace;
-          font-size: 8px;
-          line-height: 1.5;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-        }
-  
-        .timeline-note {
-          margin: 12px 0 0;
-          color: var(--parchment-dim);
-          font-family: "JetBrains Mono", monospace;
-          font-size: 8px;
-          line-height: 1.6;
-        }
-      @media (max-width: 800px) {
+      @media (max-width: 900px) {
         .page {
           grid-template-columns: 1fr;
         }
 
         .ladder {
-          max-height: 390px;
-        }
-
-        .info-strip {
-          grid-template-columns: 1fr;
-        }
-
-        .link-grid {
-          grid-template-columns: 1fr;
+          max-height: 430px;
         }
       }
 
-      @media (max-width: 480px) {
+      @media (max-width: 650px) {
         body {
           padding: 16px 10px;
         }
@@ -551,13 +512,14 @@
           grid-template-columns: repeat(2, 1fr);
         }
 
-        .sound-panel,
-        .ladder-card {
-          padding: 22px 16px 8px;
+        .link-grid {
+          grid-template-columns: 1fr;
         }
 
-        .ladder-card {
-          padding-bottom: 22px;
+        .sound-panel,
+        .ladder-card,
+        .info-card {
+          padding: 22px 16px;
         }
 
         .row {
@@ -572,185 +534,160 @@
   </head>
 
   <body>
-      <div class="page">
-          <main>
-              <section class="card">
-                  <p class="eyebrow">Countdown Mechanism</p>
-                  <h1>CAT 2026</h1>
-                  <p class="subtitle">ISB PGP YL · 29 NOVEMBER 2026 · IST</p>
+    <div class="page">
+      <main>
+        <section class="card">
+          <p class="eyebrow">Countdown Mechanism</p>
+          <h1>CAT 2026</h1>
+          <p class="subtitle">ISB PGP YL · 29 NOVEMBER 2026 · IST</p>
 
-                  <section class="countdown">
-                      <div class="time-box">
-                          <span id="days" class="number">00</span>
-                          <span class="unit">DAYS</span>
-                      </div>
+          <section class="countdown">
+            <div class="time-box">
+              <span id="days" class="number">00</span>
+              <span class="unit">DAYS</span>
+            </div>
 
-                      <div class="time-box">
-                          <span id="hours" class="number">00</span>
-                          <span class="unit">HOURS</span>
-                      </div>
+            <div class="time-box">
+              <span id="hours" class="number">00</span>
+              <span class="unit">HOURS</span>
+            </div>
 
-                      <div class="time-box">
-                          <span id="minutes" class="number">00</span>
-                          <span class="unit">MINUTES</span>
-                      </div>
+            <div class="time-box">
+              <span id="minutes" class="number">00</span>
+              <span class="unit">MINUTES</span>
+            </div>
 
-                      <div class="time-box">
-                          <span id="seconds" class="number">00</span>
-                          <span class="unit">SECONDS</span>
-                      </div>
-                  </section>
+            <div class="time-box">
+              <span id="seconds" class="number">00</span>
+              <span class="unit">SECONDS</span>
+            </div>
+          </section>
 
-                  <p id="message">
-                      CAT is the first checkpoint. ISB PGP YL is the mission.
-                  </p>
+          <p id="message">
+            CAT is the first checkpoint. ISB PGP YL is the mission.
+          </p>
 
-                  <button id="soundButton">Enable Clock Sound</button>
-                  <p id="soundStatus">Press once to activate the clock.</p>
-              </section>
+          <button id="soundButton">Enable Clock Sound</button>
+          <p id="soundStatus">Press once to activate the clock.</p>
+        </section>
 
-              <section class="info-strip">
-                  <div class="info-card">
-                      <p class="mini-title">Important Links</p>
+        <section class="info-strip">
+          <div class="info-card">
+            <p class="mini-title">Important Links</p>
 
-                      <div class="link-grid">
-                          <a class="cat-link"
-                             href="https://iimcat.ac.in"
-                             target="_blank"
-                             rel="noopener noreferrer">
-                              Official CAT Website
-                          </a>
+            <div class="link-grid">
+              <a
+                class="cat-link"
+                href="https://iimcat.ac.in"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Official CAT Website
+              </a>
 
-                          <a class="cat-link"
-                             href="https://iimcat.ac.in/per/g06/pub/32842/ASM/WebPortal/1/index.html"
-                             target="_blank"
-                             rel="noopener noreferrer">
-                              CAT Login / Registration
-                          </a>
+              <a
+                class="cat-link"
+                href="https://iimcat.ac.in/per/g06/pub/32842/ASM/WebPortal/1/index.html"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                CAT Login / Registration
+              </a>
 
-                          <a class="cat-link"
-                             href="https://www.iiml.ac.in/news-and-announcement"
-                             target="_blank"
-                             rel="noopener noreferrer">
-                              IIM Lucknow Updates
-                          </a>
-                      </div>
-                  </div>
+              <a
+                class="cat-link"
+                href="https://www.iiml.ac.in/news-and-announcement"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                IIM Lucknow Updates
+              </a>
+            </div>
+          </div>
+        </section>
 
-                  <div class="info-card">
-                      <p class="mini-title">Important Timelines</p>
+        <section class="sound-panel">
+          <p class="sound-title">Clock Sound Controls</p>
 
-                      <div class="timeline-row">
-                          <div class="timeline-item">
-                              <span class="timeline-date">26 JUL 2026</span>
-                              <span class="timeline-label">CAT 2026 advertisement released</span>
-                          </div>
+          <div class="row">
+            <label>Tempo</label>
+            <input type="range" min="60" max="60" value="60" disabled />
+            <span class="val">60 bpm</span>
+          </div>
 
-                          <div class="timeline-item">
-                              <span class="timeline-date">03 AUG 2026 · 10:00 AM</span>
-                              <span class="timeline-label">Registration opens</span>
-                          </div>
+          <div class="row">
+            <label>Pitch</label>
+            <input
+              type="range"
+              id="pitch"
+              min="-12"
+              max="12"
+              value="0"
+              step="1"
+            />
+            <span class="val" id="pitchVal">0 st</span>
+          </div>
 
-                          <div class="timeline-item">
-                              <span class="timeline-date">15 SEP 2026 · 05:00 PM</span>
-                              <span class="timeline-label">Last date to apply</span>
-                          </div>
+          <div class="row">
+            <label>Weight</label>
+            <input
+              type="range"
+              id="weight"
+              min="0"
+              max="100"
+              value="80"
+              step="1"
+            />
+            <span class="val" id="weightVal">80%</span>
+          </div>
 
-                          <div class="timeline-item">
-                              <span class="timeline-date">NOV 2026</span>
-                              <span class="timeline-label">Admit card window</span>
-                          </div>
+          <div class="row">
+            <label>Reverb</label>
+            <input
+              type="range"
+              id="reverb"
+              min="0"
+              max="100"
+              value="55"
+              step="1"
+            />
+            <span class="val" id="reverbVal">55%</span>
+          </div>
 
-                          <div class="timeline-item">
-                              <span class="timeline-date">29 NOV 2026</span>
-                              <span class="timeline-label">CAT 2026 exam day</span>
-                          </div>
+          <div class="row">
+            <label>Volume</label>
+            <input
+              type="range"
+              id="volume"
+              min="0"
+              max="100"
+              value="80"
+              step="1"
+            />
+            <span class="val" id="volumeVal">80%</span>
+          </div>
 
-                          <div class="timeline-item">
-                              <span class="timeline-date">DEC 2026 / JAN 2027</span>
-                              <span class="timeline-label">Answer key and results</span>
-                          </div>
-                      </div>
+          <div class="drone-row">
+            <label>Low Drone</label>
+            <div class="switch" id="droneSwitch"></div>
+          </div>
+        </section>
+      </main>
 
-                      <p class="timeline-note">
-                          Verify final deadlines only from the official CAT website before submitting forms or payments.
-                      </p>
-                  </div>
-              </section>
-              <section class="sound-panel">
-                  <p class="sound-title">Clock Sound Controls</p>
+      <aside class="ladder-card">
+        <p class="ladder-title">CAT Calendar</p>
+        <p class="ladder-subtitle" id="calendarRange">
+          LIVE DATE WINDOW · INDIA STANDARD TIME
+        </p>
 
-                  <div class="row">
-                      <label>Tempo</label>
-                      <input type="range" min="60" max="60" value="60" disabled />
-                      <span class="val">60 bpm</span>
-                  </div>
+        <div class="ladder" id="ladder"></div>
 
-                  <div class="row">
-                      <label>Pitch</label>
-                      <input type="range"
-                             id="pitch"
-                             min="-12"
-                             max="12"
-                             value="0"
-                             step="1" />
-                      <span class="val" id="pitchVal">0 st</span>
-                  </div>
-
-                  <div class="row">
-                      <label>Weight</label>
-                      <input type="range"
-                             id="weight"
-                             min="0"
-                             max="100"
-                             value="80"
-                             step="1" />
-                      <span class="val" id="weightVal">80%</span>
-                  </div>
-
-                  <div class="row">
-                      <label>Reverb</label>
-                      <input type="range"
-                             id="reverb"
-                             min="0"
-                             max="100"
-                             value="55"
-                             step="1" />
-                      <span class="val" id="reverbVal">55%</span>
-                  </div>
-
-                  <div class="row">
-                      <label>Volume</label>
-                      <input type="range"
-                             id="volume"
-                             min="0"
-                             max="100"
-                             value="80"
-                             step="1" />
-                      <span class="val" id="volumeVal">80%</span>
-                  </div>
-
-                  <div class="drone-row">
-                      <label>Low Drone</label>
-                      <div class="switch" id="droneSwitch"></div>
-                  </div>
-              </section>
-          </main>
-
-          <aside class="ladder-card">
-              <p class="ladder-title">CAT Calendar</p>
-              <p class="ladder-subtitle" id="calendarRange">
-                  LIVE DATE WINDOW · INDIA STANDARD TIME
-              </p>
-
-              <div class="ladder" id="ladder"></div>
-
-              <p class="weeks-left">
-                  <strong id="weeksLeft">-- weeks</strong>
-                  remaining until CAT day
-              </p>
-          </aside>
-      </div>
+        <p class="weeks-left">
+          <strong id="weeksLeft">-- weeks</strong>
+          remaining until CAT day
+        </p>
+      </aside>
+    </div>
 
     <script>
       const targetDate = new Date("2026-11-29T00:00:00+05:30").getTime();
@@ -833,48 +770,127 @@
 
         const dayMilliseconds = 24 * 60 * 60 * 1000;
         const target = new Date("2026-11-29T00:00:00+05:30");
+        const endDate = new Date("2027-01-05T00:00:00+05:30");
         const currentDate = new Date(today);
 
-        ladder.innerHTML = "";
+        const milestones = [
+          {
+            date: new Date("2026-07-26T00:00:00+05:30"),
+            label: "CAT 2026 advertisement released",
+            tag: "Notice",
+          },
+          {
+            date: new Date("2026-08-03T10:00:00+05:30"),
+            label: "Registration opens",
+            tag: "Application",
+          },
+          {
+            date: new Date("2026-09-15T17:00:00+05:30"),
+            label: "Last date to apply",
+            tag: "Deadline",
+          },
+          {
+            date: new Date("2026-11-01T00:00:00+05:30"),
+            label: "Admit card window / official update expected",
+            tag: "Admit Card",
+          },
+          {
+            date: new Date("2026-11-29T00:00:00+05:30"),
+            label: "CAT 2026 exam day",
+            tag: "Exam Day",
+            catDay: true,
+          },
+          {
+            date: new Date("2026-12-15T00:00:00+05:30"),
+            label: "Answer key / objection window expected",
+            tag: "Post Exam",
+          },
+          {
+            date: new Date("2027-01-05T00:00:00+05:30"),
+            label: "Result updates expected",
+            tag: "Result",
+          },
+        ];
 
-        // Shows every single week from today's date through CAT Day.
-        while (currentDate.getTime() < target.getTime()) {
-          const step = document.createElement("div");
-          const isToday = currentDate.getTime() === today.getTime();
+        const calendarItems = [];
 
-          step.className = isToday ? "step today" : "step future";
-
-          const weekNumber = Math.max(
-            1,
-            Math.floor(
-              (currentDate.getTime() - preparationStart) /
-                (7 * dayMilliseconds),
-            ) + 1,
+        milestones.forEach((milestone) => {
+          const milestoneDateOnly = new Date(
+            `${getDateKey(milestone.date)}T00:00:00+05:30`,
           );
 
-          step.innerHTML = `
-          <span class="step-date">${formatDate(currentDate)}</span>
-          <span class="step-week">
-            ${isToday ? `TODAY · WEEK ${weekNumber}` : `WEEK ${weekNumber}`}
-          </span>
-        `;
+          const isPast = milestoneDateOnly.getTime() < today.getTime();
 
-          ladder.appendChild(step);
+          if (
+            milestoneDateOnly.getTime() >=
+              today.getTime() - 21 * dayMilliseconds &&
+            milestoneDateOnly.getTime() <= endDate.getTime()
+          ) {
+            calendarItems.push({
+              type: "milestone",
+              date: milestoneDateOnly,
+              label: milestone.label,
+              tag: milestone.tag,
+              isPast,
+              catDay: milestone.catDay || false,
+            });
+          }
+        });
 
-          // Move forward exactly one week with no skipped weeks.
+        while (currentDate.getTime() < target.getTime()) {
+          calendarItems.push({
+            type: "week",
+            date: new Date(currentDate),
+          });
+
           currentDate.setDate(currentDate.getDate() + 7);
         }
 
-        const catStep = document.createElement("div");
-        catStep.className = "step cat-day";
-        catStep.innerHTML = `
-        <span class="step-date">29 NOV</span>
-        <span class="step-week">CAT 2026</span>
-      `;
+        calendarItems.sort((a, b) => a.date.getTime() - b.date.getTime());
 
-        ladder.appendChild(catStep);
+        ladder.innerHTML = "";
 
-        calendarRange.textContent = `${formatDate(today)} → 29 NOV · INDIA STANDARD TIME`;
+        calendarItems.forEach((item) => {
+          const step = document.createElement("div");
+          const isToday = item.date.getTime() === today.getTime();
+
+          if (item.type === "milestone") {
+            if (item.catDay) {
+              step.className = "step cat-day";
+            } else if (item.isPast) {
+              step.className = "step milestone past";
+            } else {
+              step.className = "step milestone";
+            }
+
+            step.innerHTML = `
+              <span class="step-date">${formatDate(item.date)}</span>
+              <span class="step-week">${item.label}</span>
+              <span class="milestone-tag">${item.tag}</span>
+            `;
+          } else {
+            step.className = isToday ? "step today" : "step future";
+
+            const weekNumber = Math.max(
+              1,
+              Math.floor(
+                (item.date.getTime() - preparationStart) /
+                  (7 * dayMilliseconds),
+              ) + 1,
+            );
+
+            step.innerHTML = `
+              <span class="step-date">${formatDate(item.date)}</span>
+              <span class="step-week">
+                ${isToday ? `TODAY · WEEK ${weekNumber}` : `WEEK ${weekNumber}`}
+              </span>
+            `;
+          }
+
+          ladder.appendChild(step);
+        });
+
+        calendarRange.textContent = `${formatDate(today)} → JAN 2027 · INDIA STANDARD TIME`;
       }
 
       function buildImpulseResponse(context, duration, decay) {
@@ -1057,61 +1073,6 @@
           oscillator.start(time);
           oscillator.stop(time + decay + 0.05);
         });
-
-        const noiseDuration = 0.018;
-        const noiseBuffer = ctx.createBuffer(
-          1,
-          ctx.sampleRate * noiseDuration,
-          ctx.sampleRate,
-        );
-
-        const noiseData = noiseBuffer.getChannelData(0);
-
-        for (let i = 0; i < noiseData.length; i++) {
-          noiseData[i] = (Math.random() * 2 - 1) * (1 - i / noiseData.length);
-        }
-
-        const noise = ctx.createBufferSource();
-        const noiseFilter = ctx.createBiquadFilter();
-        const noiseGain = ctx.createGain();
-
-        noise.buffer = noiseBuffer;
-
-        noiseFilter.type = "bandpass";
-        noiseFilter.frequency.value = 1800 * pitchRatio;
-        noiseFilter.Q.value = 1.1;
-
-        noiseGain.gain.setValueAtTime(
-          0.4 * (1 - weight * 0.5) * accentMultiplier,
-          time,
-        );
-        noiseGain.gain.exponentialRampToValueAtTime(
-          0.001,
-          time + noiseDuration,
-        );
-
-        noise.connect(noiseFilter);
-        noiseFilter.connect(noiseGain);
-        noiseGain.connect(tickBus);
-        noise.start(time);
-
-        const sub = ctx.createOscillator();
-        const subGain = ctx.createGain();
-
-        sub.type = "sine";
-        sub.frequency.value = 30 * pitchRatio;
-
-        subGain.gain.setValueAtTime(0.0001, time);
-        subGain.gain.exponentialRampToValueAtTime(
-          (0.5 + weight * 0.4) * tailMultiplier,
-          time + 0.006,
-        );
-        subGain.gain.exponentialRampToValueAtTime(0.001, time + 0.35);
-
-        sub.connect(subGain);
-        subGain.connect(lowBus);
-        sub.start(time);
-        sub.stop(time + 0.4);
       }
 
       function playClockTick() {
