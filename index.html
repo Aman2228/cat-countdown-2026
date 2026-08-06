@@ -1,0 +1,1118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CAT 2026 Countdown | ISB PGP YL</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap");
+
+      :root {
+        --void: #081411;
+        --panel: #10231d;
+        --panel-raised: #173129;
+        --emerald: #176b53;
+        --emerald-bright: #2e9b78;
+        --gold: #c69b55;
+        --gold-bright: #e0bd7a;
+        --parchment: #eadfc9;
+        --parchment-dim: #a99f8e;
+        --line: #294238;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 30px 16px;
+        color: var(--parchment);
+        font-family: "Amiri", serif;
+        background:
+          radial-gradient(
+            ellipse 900px 700px at 50% 15%,
+            rgba(46, 155, 120, 0.11),
+            transparent 58%
+          ),
+          radial-gradient(
+            ellipse 600px 500px at 50% 100%,
+            rgba(198, 155, 85, 0.06),
+            transparent 65%
+          ),
+          var(--void);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.16;
+        background-image:
+          linear-gradient(
+            30deg,
+            transparent 48%,
+            rgba(198, 155, 85, 0.16) 49%,
+            rgba(198, 155, 85, 0.16) 51%,
+            transparent 52%
+          ),
+          linear-gradient(
+            -30deg,
+            transparent 48%,
+            rgba(198, 155, 85, 0.16) 49%,
+            rgba(198, 155, 85, 0.16) 51%,
+            transparent 52%
+          );
+        background-size: 48px 48px;
+      }
+
+      .page {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 280px;
+        gap: 22px;
+        align-items: start;
+      }
+
+      .card,
+      .ladder-card,
+      .sound-panel {
+        background: rgba(16, 35, 29, 0.94);
+        border: 1px solid var(--line);
+        box-shadow: 0 0 35px rgba(46, 155, 120, 0.11);
+      }
+
+      .card {
+        padding: 46px 28px 34px;
+        text-align: center;
+      }
+
+      .eyebrow,
+      .ladder-title,
+      .sound-title {
+        margin: 0;
+        color: var(--gold-bright);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 12px 0 8px;
+        color: var(--parchment);
+        font-family: "Amiri", serif;
+        font-size: clamp(3rem, 7vw, 5.4rem);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        line-height: 1;
+        text-transform: uppercase;
+        text-shadow: 0 0 20px rgba(198, 155, 85, 0.24);
+      }
+
+      .subtitle {
+        margin: 0 0 36px;
+        color: var(--parchment-dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+      }
+
+      .countdown {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .time-box {
+        padding: 18px 8px;
+        background: rgba(23, 49, 41, 0.72);
+        border: 1px solid var(--line);
+      }
+
+      .number {
+        display: block;
+        color: var(--gold-bright);
+        font-family: "JetBrains Mono", monospace;
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        font-weight: 700;
+        text-shadow: 0 0 14px rgba(198, 155, 85, 0.42);
+      }
+
+      .unit {
+        color: var(--parchment-dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+      }
+
+      #message {
+        margin: 28px 0 18px;
+        font-size: 1.05rem;
+        letter-spacing: 0.04em;
+      }
+
+      #soundButton {
+        padding: 14px 26px;
+        cursor: pointer;
+        color: var(--parchment);
+        background: var(--panel-raised);
+        border: 1px solid var(--gold);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        transition: 0.15s ease;
+      }
+
+      #soundButton:hover,
+      #soundButton.active {
+        color: var(--void);
+        background: var(--gold);
+        box-shadow: 0 0 24px rgba(198, 155, 85, 0.26);
+      }
+
+      #soundStatus {
+        min-height: 17px;
+        margin: 12px 0 0;
+        color: var(--parchment-dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .sound-panel {
+        margin-top: 22px;
+        padding: 22px 24px 8px;
+      }
+
+      .sound-title {
+        margin-bottom: 18px;
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .row label {
+        width: 76px;
+        flex-shrink: 0;
+        color: var(--parchment-dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .row .val {
+        width: 48px;
+        flex-shrink: 0;
+        color: var(--gold-bright);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        text-align: right;
+      }
+
+      input[type="range"] {
+        flex: 1;
+        height: 2px;
+        appearance: none;
+        outline: none;
+        background: var(--line);
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        width: 13px;
+        height: 13px;
+        cursor: pointer;
+        appearance: none;
+        border-radius: 50%;
+        background: var(--gold);
+        box-shadow: 0 0 8px rgba(198, 155, 85, 0.55);
+      }
+
+      input[type="range"]::-moz-range-thumb {
+        width: 13px;
+        height: 13px;
+        cursor: pointer;
+        border: none;
+        border-radius: 50%;
+        background: var(--gold);
+      }
+
+      .drone-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+
+      .drone-row label {
+        color: var(--parchment-dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .switch {
+        position: relative;
+        width: 38px;
+        height: 20px;
+        cursor: pointer;
+        background: var(--panel-raised);
+        border: 1px solid var(--line);
+      }
+
+      .switch::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 14px;
+        height: 14px;
+        background: var(--parchment-dim);
+        transition: 0.15s ease;
+      }
+
+      .switch.on {
+        border-color: var(--gold);
+      }
+
+      .switch.on::after {
+        left: 19px;
+        background: var(--gold);
+        box-shadow: 0 0 7px rgba(198, 155, 85, 0.55);
+      }
+
+      .ladder-card {
+        padding: 28px 24px;
+      }
+
+      .ladder-subtitle {
+        margin: 7px 0 22px;
+        color: var(--parchment-dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        line-height: 1.55;
+      }
+
+      .ladder {
+        max-height: 600px;
+        margin-left: 8px;
+        padding-right: 8px;
+        padding-left: 28px;
+        overflow-y: auto;
+        border-left: 2px solid var(--line);
+      }
+
+      .ladder::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      .ladder::-webkit-scrollbar-track {
+        background: var(--panel-raised);
+      }
+
+      .ladder::-webkit-scrollbar-thumb {
+        background: var(--emerald);
+      }
+
+      .step {
+        position: relative;
+        min-height: 58px;
+        padding: 0 0 16px 8px;
+      }
+
+      .step::before {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: -37px;
+        width: 15px;
+        height: 15px;
+        border: 3px solid #496158;
+        border-radius: 50%;
+        background: var(--panel);
+      }
+
+      .step.today::before {
+        border-color: var(--gold-bright);
+        background: var(--gold-bright);
+        box-shadow: 0 0 14px rgba(224, 189, 122, 0.75);
+      }
+
+      .step.future::before {
+        border-color: var(--emerald);
+        background: var(--panel);
+      }
+
+      .step.cat-day::before {
+        border-color: var(--gold);
+        background: var(--gold);
+        box-shadow: 0 0 16px rgba(198, 155, 85, 0.7);
+      }
+
+      .step-date {
+        display: block;
+        color: var(--parchment);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      .step-week {
+        display: block;
+        margin-top: 5px;
+        color: var(--parchment-dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .step.today .step-date,
+      .step.cat-day .step-date {
+        color: var(--gold-bright);
+      }
+
+      .weeks-left {
+        margin: 16px 0 0;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        color: var(--parchment-dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        line-height: 1.6;
+      }
+
+      .weeks-left strong {
+        display: block;
+        color: var(--gold-bright);
+        font-size: 21px;
+      }
+
+      @media (max-width: 800px) {
+        .page {
+          grid-template-columns: 1fr;
+        }
+
+        .ladder {
+          max-height: 390px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 16px 10px;
+        }
+
+        .card {
+          padding: 38px 16px 28px;
+        }
+
+        .countdown {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .sound-panel,
+        .ladder-card {
+          padding: 22px 16px 8px;
+        }
+
+        .ladder-card {
+          padding-bottom: 22px;
+        }
+
+        .row {
+          gap: 10px;
+        }
+
+        .row label {
+          width: 58px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="page">
+      <main>
+        <section class="card">
+          <p class="eyebrow">Countdown Mechanism</p>
+          <h1>CAT 2026</h1>
+          <p class="subtitle">ISB PGP YL · 29 NOVEMBER 2026 · IST</p>
+
+          <section class="countdown">
+            <div class="time-box">
+              <span id="days" class="number">00</span>
+              <span class="unit">DAYS</span>
+            </div>
+
+            <div class="time-box">
+              <span id="hours" class="number">00</span>
+              <span class="unit">HOURS</span>
+            </div>
+
+            <div class="time-box">
+              <span id="minutes" class="number">00</span>
+              <span class="unit">MINUTES</span>
+            </div>
+
+            <div class="time-box">
+              <span id="seconds" class="number">00</span>
+              <span class="unit">SECONDS</span>
+            </div>
+          </section>
+
+          <p id="message">
+            CAT is the first checkpoint. ISB PGP YL is the mission.
+          </p>
+
+          <button id="soundButton">Enable Clock Sound</button>
+          <p id="soundStatus">Press once to activate the clock.</p>
+        </section>
+
+        <section class="sound-panel">
+          <p class="sound-title">Clock Sound Controls</p>
+
+          <div class="row">
+            <label>Tempo</label>
+            <input type="range" min="60" max="60" value="60" disabled />
+            <span class="val">60 bpm</span>
+          </div>
+
+          <div class="row">
+            <label>Pitch</label>
+            <input
+              type="range"
+              id="pitch"
+              min="-12"
+              max="12"
+              value="0"
+              step="1"
+            />
+            <span class="val" id="pitchVal">0 st</span>
+          </div>
+
+          <div class="row">
+            <label>Weight</label>
+            <input
+              type="range"
+              id="weight"
+              min="0"
+              max="100"
+              value="80"
+              step="1"
+            />
+            <span class="val" id="weightVal">80%</span>
+          </div>
+
+          <div class="row">
+            <label>Reverb</label>
+            <input
+              type="range"
+              id="reverb"
+              min="0"
+              max="100"
+              value="55"
+              step="1"
+            />
+            <span class="val" id="reverbVal">55%</span>
+          </div>
+
+          <div class="row">
+            <label>Volume</label>
+            <input
+              type="range"
+              id="volume"
+              min="0"
+              max="100"
+              value="80"
+              step="1"
+            />
+            <span class="val" id="volumeVal">80%</span>
+          </div>
+
+          <div class="drone-row">
+            <label>Low Drone</label>
+            <div class="switch" id="droneSwitch"></div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="ladder-card">
+        <p class="ladder-title">CAT Calendar</p>
+        <p class="ladder-subtitle" id="calendarRange">
+          LIVE DATE WINDOW · INDIA STANDARD TIME
+        </p>
+
+        <div class="ladder" id="ladder"></div>
+
+        <p class="weeks-left">
+          <strong id="weeksLeft">-- weeks</strong>
+          remaining until CAT day
+        </p>
+      </aside>
+    </div>
+
+    <script>
+      const targetDate = new Date("2026-11-29T00:00:00+05:30").getTime();
+      const preparationStart = new Date("2026-07-18T00:00:00+05:30").getTime();
+
+      let ctx = null;
+      let masterGain = null;
+      let dryGain = null;
+      let wetGain = null;
+      let convolver = null;
+      let droneNodes = null;
+
+      let soundOn = false;
+      let droneOn = false;
+      let lastSecondPlayed = -1;
+      let displayedDateKey = "";
+
+      const pitchEl = document.getElementById("pitch");
+      const weightEl = document.getElementById("weight");
+      const reverbEl = document.getElementById("reverb");
+      const volumeEl = document.getElementById("volume");
+
+      const pitchVal = document.getElementById("pitchVal");
+      const weightVal = document.getElementById("weightVal");
+      const reverbVal = document.getElementById("reverbVal");
+      const volumeVal = document.getElementById("volumeVal");
+
+      const soundButton = document.getElementById("soundButton");
+      const soundStatus = document.getElementById("soundStatus");
+      const droneSwitch = document.getElementById("droneSwitch");
+      const ladder = document.getElementById("ladder");
+      const calendarRange = document.getElementById("calendarRange");
+
+      function getISTToday() {
+        const parts = new Intl.DateTimeFormat("en-CA", {
+          timeZone: "Asia/Kolkata",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).formatToParts(new Date());
+
+        const values = {};
+
+        parts.forEach((part) => {
+          if (part.type !== "literal") {
+            values[part.type] = part.value;
+          }
+        });
+
+        return new Date(
+          `${values.year}-${values.month}-${values.day}T00:00:00+05:30`,
+        );
+      }
+
+      function getDateKey(date) {
+        return new Intl.DateTimeFormat("en-CA", {
+          timeZone: "Asia/Kolkata",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).format(date);
+      }
+
+      function formatDate(date) {
+        return new Intl.DateTimeFormat("en-GB", {
+          timeZone: "Asia/Kolkata",
+          day: "2-digit",
+          month: "short",
+        })
+          .format(date)
+          .toUpperCase();
+      }
+
+      function buildDynamicCalendar() {
+        const today = getISTToday();
+        const todayKey = getDateKey(today);
+
+        if (todayKey === displayedDateKey) return;
+        displayedDateKey = todayKey;
+
+        const dayMilliseconds = 24 * 60 * 60 * 1000;
+        const target = new Date("2026-11-29T00:00:00+05:30");
+        const currentDate = new Date(today);
+
+        ladder.innerHTML = "";
+
+        // Shows every single week from today's date through CAT Day.
+        while (currentDate.getTime() < target.getTime()) {
+          const step = document.createElement("div");
+          const isToday = currentDate.getTime() === today.getTime();
+
+          step.className = isToday ? "step today" : "step future";
+
+          const weekNumber = Math.max(
+            1,
+            Math.floor(
+              (currentDate.getTime() - preparationStart) /
+                (7 * dayMilliseconds),
+            ) + 1,
+          );
+
+          step.innerHTML = `
+          <span class="step-date">${formatDate(currentDate)}</span>
+          <span class="step-week">
+            ${isToday ? `TODAY · WEEK ${weekNumber}` : `WEEK ${weekNumber}`}
+          </span>
+        `;
+
+          ladder.appendChild(step);
+
+          // Move forward exactly one week with no skipped weeks.
+          currentDate.setDate(currentDate.getDate() + 7);
+        }
+
+        const catStep = document.createElement("div");
+        catStep.className = "step cat-day";
+        catStep.innerHTML = `
+        <span class="step-date">29 NOV</span>
+        <span class="step-week">CAT 2026</span>
+      `;
+
+        ladder.appendChild(catStep);
+
+        calendarRange.textContent = `${formatDate(today)} → 29 NOV · INDIA STANDARD TIME`;
+      }
+
+      function buildImpulseResponse(context, duration, decay) {
+        const length = context.sampleRate * duration;
+        const impulse = context.createBuffer(2, length, context.sampleRate);
+
+        for (let channel = 0; channel < 2; channel++) {
+          const data = impulse.getChannelData(channel);
+
+          for (let i = 0; i < length; i++) {
+            const progress = i / length;
+            data[i] = (Math.random() * 2 - 1) * Math.pow(1 - progress, decay);
+          }
+        }
+
+        return impulse;
+      }
+
+      function makeSaturationCurve(amount) {
+        const points = 1024;
+        const curve = new Float32Array(points);
+
+        for (let i = 0; i < points; i++) {
+          const x = (i / (points - 1)) * 2 - 1;
+          curve[i] = Math.tanh(x * amount) / Math.tanh(amount);
+        }
+
+        return curve;
+      }
+
+      function semitoneRatio(semitones) {
+        return Math.pow(2, semitones / 12);
+      }
+
+      async function initAudio() {
+        if (!ctx) {
+          ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+          masterGain = ctx.createGain();
+          masterGain.gain.value = volumeEl.value / 100;
+          masterGain.connect(ctx.destination);
+
+          dryGain = ctx.createGain();
+          wetGain = ctx.createGain();
+
+          dryGain.connect(masterGain);
+          wetGain.connect(masterGain);
+
+          convolver = ctx.createConvolver();
+          convolver.buffer = buildImpulseResponse(ctx, 2.6, 2.4);
+          convolver.connect(wetGain);
+
+          updateReverbMix();
+        }
+
+        if (ctx.state === "suspended") {
+          await ctx.resume();
+        }
+      }
+
+      function updateReverbMix() {
+        if (!ctx) return;
+
+        const mix = reverbEl.value / 100;
+
+        wetGain.gain.setTargetAtTime(mix * 0.9, ctx.currentTime, 0.02);
+        dryGain.gain.setTargetAtTime(1 - mix * 0.4, ctx.currentTime, 0.02);
+      }
+
+      function scheduleTick(time, accent) {
+        const pitchRatio =
+          semitoneRatio(parseFloat(pitchEl.value)) *
+          (accent === "light" ? Math.pow(2, 1.5 / 12) : 1);
+
+        const weight = parseFloat(weightEl.value) / 100;
+        const accentMultiplier = accent === "light" ? 0.55 : 1;
+        const tailMultiplier = accent === "light" ? 0.6 : 1;
+
+        const tickBus = ctx.createGain();
+        tickBus.connect(dryGain);
+        tickBus.connect(convolver);
+
+        const lowBus = ctx.createGain();
+        const saturation = ctx.createWaveShaper();
+        const lowFilter = ctx.createBiquadFilter();
+
+        saturation.curve = makeSaturationCurve(1.6 + weight * 1.2);
+        saturation.oversample = "4x";
+
+        lowFilter.type = "lowpass";
+        lowFilter.frequency.value = 900;
+
+        lowBus.connect(saturation);
+        saturation.connect(lowFilter);
+        lowFilter.connect(tickBus);
+
+        const thud = ctx.createOscillator();
+        const thudGain = ctx.createGain();
+
+        thud.type = "sine";
+        thud.frequency.setValueAtTime(85 * pitchRatio, time);
+        thud.frequency.exponentialRampToValueAtTime(
+          46 * pitchRatio,
+          time + 0.07,
+        );
+
+        thudGain.gain.setValueAtTime(0.0001, time);
+        thudGain.gain.exponentialRampToValueAtTime(
+          (0.9 + weight * 0.5) * accentMultiplier,
+          time + 0.004,
+        );
+        thudGain.gain.exponentialRampToValueAtTime(0.001, time + 0.4);
+
+        thud.connect(thudGain);
+        thudGain.connect(lowBus);
+        thud.start(time);
+        thud.stop(time + 0.45);
+
+        const boom = ctx.createOscillator();
+        const boomGain = ctx.createGain();
+
+        boom.type = "sine";
+        boom.frequency.setValueAtTime(58 * pitchRatio, time);
+        boom.frequency.exponentialRampToValueAtTime(
+          29 * pitchRatio,
+          time + 0.22,
+        );
+
+        boomGain.gain.setValueAtTime(0.0001, time);
+        boomGain.gain.exponentialRampToValueAtTime(
+          (0.15 + weight * 1.1) * tailMultiplier,
+          time + 0.012,
+        );
+        boomGain.gain.exponentialRampToValueAtTime(
+          0.001,
+          time + (0.9 + weight * 0.4) * tailMultiplier,
+        );
+
+        boom.connect(boomGain);
+        boomGain.connect(lowBus);
+        boom.start(time);
+        boom.stop(time + 1.4);
+
+        const partials = [1, 2.1, 3.4];
+        const metalBus = ctx.createGain();
+        const metalBandpass = ctx.createBiquadFilter();
+        const metalLowpass = ctx.createBiquadFilter();
+
+        metalBus.gain.value = 0.5 * (1 - weight * 0.75) * accentMultiplier;
+
+        metalBandpass.type = "bandpass";
+        metalBandpass.frequency.value = 900;
+        metalBandpass.Q.value = 0.6;
+
+        metalLowpass.type = "lowpass";
+        metalLowpass.frequency.value = 2200;
+
+        metalBus.connect(metalBandpass);
+        metalBandpass.connect(metalLowpass);
+        metalLowpass.connect(tickBus);
+
+        partials.forEach((ratio, index) => {
+          const oscillator = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const decay = 0.1 + index * 0.04;
+
+          oscillator.type = "sine";
+          oscillator.frequency.value = 340 * pitchRatio * ratio;
+
+          gain.gain.setValueAtTime(0.0001, time);
+          gain.gain.exponentialRampToValueAtTime(
+            0.55 / (index + 1),
+            time + 0.003,
+          );
+          gain.gain.exponentialRampToValueAtTime(0.0005, time + decay);
+
+          oscillator.connect(gain);
+          gain.connect(metalBus);
+
+          oscillator.start(time);
+          oscillator.stop(time + decay + 0.05);
+        });
+
+        const noiseDuration = 0.018;
+        const noiseBuffer = ctx.createBuffer(
+          1,
+          ctx.sampleRate * noiseDuration,
+          ctx.sampleRate,
+        );
+
+        const noiseData = noiseBuffer.getChannelData(0);
+
+        for (let i = 0; i < noiseData.length; i++) {
+          noiseData[i] = (Math.random() * 2 - 1) * (1 - i / noiseData.length);
+        }
+
+        const noise = ctx.createBufferSource();
+        const noiseFilter = ctx.createBiquadFilter();
+        const noiseGain = ctx.createGain();
+
+        noise.buffer = noiseBuffer;
+
+        noiseFilter.type = "bandpass";
+        noiseFilter.frequency.value = 1800 * pitchRatio;
+        noiseFilter.Q.value = 1.1;
+
+        noiseGain.gain.setValueAtTime(
+          0.4 * (1 - weight * 0.5) * accentMultiplier,
+          time,
+        );
+        noiseGain.gain.exponentialRampToValueAtTime(
+          0.001,
+          time + noiseDuration,
+        );
+
+        noise.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(tickBus);
+        noise.start(time);
+
+        const sub = ctx.createOscillator();
+        const subGain = ctx.createGain();
+
+        sub.type = "sine";
+        sub.frequency.value = 30 * pitchRatio;
+
+        subGain.gain.setValueAtTime(0.0001, time);
+        subGain.gain.exponentialRampToValueAtTime(
+          (0.5 + weight * 0.4) * tailMultiplier,
+          time + 0.006,
+        );
+        subGain.gain.exponentialRampToValueAtTime(0.001, time + 0.35);
+
+        sub.connect(subGain);
+        subGain.connect(lowBus);
+        sub.start(time);
+        sub.stop(time + 0.4);
+      }
+
+      function playClockTick() {
+        if (!soundOn || !ctx) return;
+
+        const accent = new Date().getSeconds() % 2 === 0 ? "heavy" : "light";
+        scheduleTick(ctx.currentTime, accent);
+      }
+
+      function startDrone() {
+        if (!ctx || droneNodes) return;
+
+        const droneGain = ctx.createGain();
+        const filter = ctx.createBiquadFilter();
+        const oscillatorOne = ctx.createOscillator();
+        const oscillatorTwo = ctx.createOscillator();
+        const lfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+
+        droneGain.gain.value = 0;
+        droneGain.gain.setTargetAtTime(0.12, ctx.currentTime, 1.2);
+
+        filter.type = "lowpass";
+        filter.frequency.value = 180;
+
+        oscillatorOne.type = "sawtooth";
+        oscillatorOne.frequency.value = 41;
+
+        oscillatorTwo.type = "sawtooth";
+        oscillatorTwo.frequency.value = 41.35;
+
+        lfo.frequency.value = 0.06;
+        lfoGain.gain.value = 40;
+
+        oscillatorOne.connect(filter);
+        oscillatorTwo.connect(filter);
+
+        filter.connect(droneGain);
+        droneGain.connect(dryGain);
+        droneGain.connect(convolver);
+
+        lfo.connect(lfoGain);
+        lfoGain.connect(filter.frequency);
+
+        oscillatorOne.start();
+        oscillatorTwo.start();
+        lfo.start();
+
+        droneNodes = {
+          gain: droneGain,
+          one: oscillatorOne,
+          two: oscillatorTwo,
+          lfo,
+        };
+      }
+
+      function stopDrone() {
+        if (!ctx || !droneNodes) return;
+
+        const now = ctx.currentTime;
+
+        droneNodes.gain.gain.setTargetAtTime(0, now, 0.6);
+        droneNodes.one.stop(now + 2);
+        droneNodes.two.stop(now + 2);
+        droneNodes.lfo.stop(now + 2);
+
+        droneNodes = null;
+      }
+
+      pitchEl.addEventListener("input", () => {
+        const prefix = pitchEl.value > 0 ? "+" : "";
+        pitchVal.textContent = `${prefix}${pitchEl.value} st`;
+      });
+
+      weightEl.addEventListener("input", () => {
+        weightVal.textContent = `${weightEl.value}%`;
+      });
+
+      reverbEl.addEventListener("input", () => {
+        reverbVal.textContent = `${reverbEl.value}%`;
+        updateReverbMix();
+      });
+
+      volumeEl.addEventListener("input", () => {
+        volumeVal.textContent = `${volumeEl.value}%`;
+
+        if (ctx) {
+          masterGain.gain.setTargetAtTime(
+            volumeEl.value / 100,
+            ctx.currentTime,
+            0.02,
+          );
+        }
+      });
+
+      droneSwitch.addEventListener("click", () => {
+        droneOn = !droneOn;
+        droneSwitch.classList.toggle("on", droneOn);
+
+        if (soundOn) {
+          if (droneOn) {
+            startDrone();
+          } else {
+            stopDrone();
+          }
+        }
+      });
+
+      soundButton.addEventListener("click", async () => {
+        try {
+          await initAudio();
+          soundOn = !soundOn;
+
+          if (soundOn) {
+            soundButton.textContent = "Mute Clock Sound";
+            soundButton.classList.add("active");
+            soundStatus.textContent = "Clock locked to countdown seconds.";
+
+            if (droneOn) {
+              startDrone();
+            }
+
+            lastSecondPlayed = new Date().getSeconds();
+            playClockTick();
+          } else {
+            soundButton.textContent = "Enable Clock Sound";
+            soundButton.classList.remove("active");
+            soundStatus.textContent = "Clock sound muted.";
+            stopDrone();
+          }
+        } catch (error) {
+          soundStatus.textContent =
+            "Browser blocked audio. Open the page directly and press again.";
+        }
+      });
+
+      function updateCountdown() {
+        const remaining = targetDate - Date.now();
+
+        buildDynamicCalendar();
+
+        if (remaining <= 0) {
+          document.getElementById("days").textContent = "00";
+          document.getElementById("hours").textContent = "00";
+          document.getElementById("minutes").textContent = "00";
+          document.getElementById("seconds").textContent = "00";
+          document.getElementById("weeksLeft").textContent = "CAT DAY";
+          document.getElementById("message").textContent =
+            "It is CAT day. Make every second count.";
+          return;
+        }
+
+        const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((remaining / (1000 * 60)) % 60);
+        const seconds = Math.floor((remaining / 1000) % 60);
+        const weeks = Math.ceil(days / 7);
+
+        document.getElementById("days").textContent = String(days).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("hours").textContent = String(hours).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("minutes").textContent = String(
+          minutes,
+        ).padStart(2, "0");
+        document.getElementById("seconds").textContent = String(
+          seconds,
+        ).padStart(2, "0");
+        document.getElementById("weeksLeft").textContent = `${weeks} weeks`;
+
+        if (soundOn && seconds !== lastSecondPlayed) {
+          lastSecondPlayed = seconds;
+          playClockTick();
+        }
+      }
+
+      updateCountdown();
+      setInterval(updateCountdown, 100);
+    </script>
+  </body>
+</html>
