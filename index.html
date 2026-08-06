@@ -407,90 +407,119 @@
         font-size: 21px;
       }
 
-        .important-links,
-        .timeline-card {
-            margin-top: 18px;
-            padding-top: 18px;
-            border-top: 1px solid var(--line);
+        .info-strip {
+          margin-top: 22px;
+          display: grid;
+          grid-template-columns: 0.75fr 1.25fr;
+          gap: 22px;
         }
-
+  
+        .info-card {
+          padding: 24px;
+          background: rgba(16, 35, 29, 0.94);
+          border: 1px solid var(--line);
+          box-shadow: 0 0 35px rgba(46, 155, 120, 0.11);
+        }
+  
         .mini-title {
-            margin: 0 0 12px;
-            color: var(--gold-bright);
-            font-family: "JetBrains Mono", monospace;
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
+          margin: 0 0 14px;
+          color: var(--gold-bright);
+          font-family: "JetBrains Mono", monospace;
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
         }
-
+  
         .link-grid {
-            display: grid;
-            gap: 9px;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
         }
-
+  
         .cat-link {
-            display: block;
-            padding: 11px 12px;
-            color: var(--parchment);
-            background: rgba(23, 49, 41, 0.72);
-            border: 1px solid var(--line);
-            font-family: "JetBrains Mono", monospace;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: 0.15s ease;
+          display: flex;
+          min-height: 54px;
+          align-items: center;
+          justify-content: center;
+          padding: 12px;
+          color: var(--parchment);
+          background: rgba(23, 49, 41, 0.72);
+          border: 1px solid var(--line);
+          font-family: "JetBrains Mono", monospace;
+          font-size: 9px;
+          font-weight: 700;
+          line-height: 1.45;
+          letter-spacing: 0.08em;
+          text-align: center;
+          text-decoration: none;
+          text-transform: uppercase;
+          transition: 0.15s ease;
         }
-
-            .cat-link:hover {
-                color: var(--void);
-                background: var(--gold);
-                border-color: var(--gold);
-                box-shadow: 0 0 18px rgba(198, 155, 85, 0.22);
-            }
-
-        .timeline-list {
-            display: grid;
-            gap: 12px;
+  
+        .cat-link:hover {
+          color: var(--void);
+          background: var(--gold);
+          border-color: var(--gold);
+          box-shadow: 0 0 18px rgba(198, 155, 85, 0.22);
         }
-
+  
+        .timeline-row {
+          display: grid;
+          grid-template-columns: repeat(6, minmax(120px, 1fr));
+          gap: 10px;
+          overflow-x: auto;
+          padding-bottom: 4px;
+        }
+  
+        .timeline-row::-webkit-scrollbar {
+          height: 5px;
+        }
+  
+        .timeline-row::-webkit-scrollbar-track {
+          background: var(--panel-raised);
+        }
+  
+        .timeline-row::-webkit-scrollbar-thumb {
+          background: var(--emerald);
+        }
+  
         .timeline-item {
-            padding: 11px 12px;
-            background: rgba(23, 49, 41, 0.5);
-            border: 1px solid var(--line);
+          min-width: 120px;
+          padding: 12px;
+          background: rgba(23, 49, 41, 0.5);
+          border: 1px solid var(--line);
         }
-
+  
         .timeline-date {
-            display: block;
-            color: var(--gold-bright);
-            font-family: "JetBrains Mono", monospace;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
+          display: block;
+          color: var(--gold-bright);
+          font-family: "JetBrains Mono", monospace;
+          font-size: 10px;
+          font-weight: 700;
+          line-height: 1.45;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
         }
-
+  
         .timeline-label {
-            display: block;
-            margin-top: 5px;
-            color: var(--parchment-dim);
-            font-family: "JetBrains Mono", monospace;
-            font-size: 8px;
-            line-height: 1.5;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
+          display: block;
+          margin-top: 6px;
+          color: var(--parchment-dim);
+          font-family: "JetBrains Mono", monospace;
+          font-size: 8px;
+          line-height: 1.5;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
         }
-
+  
         .timeline-note {
-            margin: 12px 0 0;
-            color: var(--parchment-dim);
-            font-family: "JetBrains Mono", monospace;
-            font-size: 8px;
-            line-height: 1.6;
+          margin: 12px 0 0;
+          color: var(--parchment-dim);
+          font-family: "JetBrains Mono", monospace;
+          font-size: 8px;
+          line-height: 1.6;
         }
-
       @media (max-width: 800px) {
         .page {
           grid-template-columns: 1fr;
@@ -498,6 +527,14 @@
 
         .ladder {
           max-height: 390px;
+        }
+
+        .info-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .link-grid {
+          grid-template-columns: 1fr;
         }
       }
 
@@ -572,6 +609,76 @@
                   <p id="soundStatus">Press once to activate the clock.</p>
               </section>
 
+              <section class="info-strip">
+                  <div class="info-card">
+                      <p class="mini-title">Important Links</p>
+
+                      <div class="link-grid">
+                          <a class="cat-link"
+                             href="https://iimcat.ac.in"
+                             target="_blank"
+                             rel="noopener noreferrer">
+                              Official CAT Website
+                          </a>
+
+                          <a class="cat-link"
+                             href="https://iimcat.ac.in/per/g06/pub/32842/ASM/WebPortal/1/index.html"
+                             target="_blank"
+                             rel="noopener noreferrer">
+                              CAT Login / Registration
+                          </a>
+
+                          <a class="cat-link"
+                             href="https://www.iiml.ac.in/news-and-announcement"
+                             target="_blank"
+                             rel="noopener noreferrer">
+                              IIM Lucknow Updates
+                          </a>
+                      </div>
+                  </div>
+
+                  <div class="info-card">
+                      <p class="mini-title">Important Timelines</p>
+
+                      <div class="timeline-row">
+                          <div class="timeline-item">
+                              <span class="timeline-date">26 JUL 2026</span>
+                              <span class="timeline-label">CAT 2026 advertisement released</span>
+                          </div>
+
+                          <div class="timeline-item">
+                              <span class="timeline-date">03 AUG 2026 · 10:00 AM</span>
+                              <span class="timeline-label">Registration opens</span>
+                          </div>
+
+                          <div class="timeline-item">
+                              <span class="timeline-date">15 SEP 2026 · 05:00 PM</span>
+                              <span class="timeline-label">Last date to apply</span>
+                          </div>
+
+                          <div class="timeline-item">
+                              <span class="timeline-date">NOV 2026</span>
+                              <span class="timeline-label">Admit card window</span>
+                          </div>
+
+                          <div class="timeline-item">
+                              <span class="timeline-date">29 NOV 2026</span>
+                              <span class="timeline-label">CAT 2026 exam day</span>
+                          </div>
+
+                          <div class="timeline-item">
+                              <span class="timeline-date">DEC 2026 / JAN 2027</span>
+                              <span class="timeline-label">Answer key and results</span>
+                          </div>
+                      </div>
+
+                      <p class="timeline-note">
+                          Verify final deadlines only from the official CAT website before submitting forms or payments.
+                      </p>
+                  </div>
+              </section>
+
+              <section class="sound-panel">
               <section class="sound-panel">
                   <p class="sound-title">Clock Sound Controls</p>
 
@@ -644,73 +751,6 @@
                   <strong id="weeksLeft">-- weeks</strong>
                   remaining until CAT day
               </p>
-
-              <section class="important-links">
-                  <p class="mini-title">Important Links</p>
-
-                  <div class="link-grid">
-                      <a class="cat-link"
-                         href="https://iimcat.ac.in"
-                         target="_blank"
-                         rel="noopener noreferrer">
-                          Official CAT Website
-                      </a>
-
-                      <a class="cat-link"
-                         href="https://iimcat.ac.in/per/g06/pub/32842/ASM/WebPortal/1/index.html"
-                         target="_blank"
-                         rel="noopener noreferrer">
-                          CAT Login / Registration
-                      </a>
-
-                      <a class="cat-link"
-                         href="https://www.iiml.ac.in/news-and-announcement"
-                         target="_blank"
-                         rel="noopener noreferrer">
-                          IIM Lucknow Updates
-                      </a>
-                  </div>
-              </section>
-
-              <section class="timeline-card">
-                  <p class="mini-title">Important Timelines</p>
-
-                  <div class="timeline-list">
-                      <div class="timeline-item">
-                          <span class="timeline-date">26 JUL 2026</span>
-                          <span class="timeline-label">CAT 2026 advertisement released</span>
-                      </div>
-
-                      <div class="timeline-item">
-                          <span class="timeline-date">03 AUG 2026 · 10:00 AM</span>
-                          <span class="timeline-label">CAT 2026 registration opens</span>
-                      </div>
-
-                      <div class="timeline-item">
-                          <span class="timeline-date">15 SEP 2026 · 05:00 PM</span>
-                          <span class="timeline-label">Last date to submit CAT application</span>
-                      </div>
-
-                      <div class="timeline-item">
-                          <span class="timeline-date">NOV 2026</span>
-                          <span class="timeline-label">Admit card window / official announcement expected</span>
-                      </div>
-
-                      <div class="timeline-item">
-                          <span class="timeline-date">29 NOV 2026</span>
-                          <span class="timeline-label">CAT 2026 exam day</span>
-                      </div>
-
-                      <div class="timeline-item">
-                          <span class="timeline-date">DEC 2026 / JAN 2027</span>
-                          <span class="timeline-label">Answer key, objection window, and result updates</span>
-                      </div>
-                  </div>
-
-                  <p class="timeline-note">
-                      Always confirm final deadlines only from the official CAT website before submitting forms or payments.
-                  </p>
-              </section>
           </aside>
       </div>
 
