@@ -206,7 +206,7 @@
 
       .link-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 10px;
       }
 
@@ -237,6 +237,26 @@
         box-shadow: 0 0 18px rgba(198, 155, 85, 0.22);
       }
 
+      .subscribe-link {
+        border-color: var(--gold);
+        box-shadow: 0 0 18px rgba(198, 155, 85, 0.14);
+      }
+      .subscribe-note {
+        margin: 12px 0 0;
+        color: var(--parchment-dim);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 8px;
+        line-height: 1.6;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      
+      .subscribe-link:hover {
+        color: var(--void);
+        background: var(--gold-bright);
+        border-color: var(--gold-bright);
+      }
+      
       .sound-panel {
         margin-top: 22px;
         padding: 22px 24px 8px;
@@ -602,7 +622,19 @@
               >
                 IIM Lucknow Updates
               </a>
+
+              <a
+                class="cat-link subscribe-link"
+                href="https://buttondown.com/reminder"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Subscribe for Weekly CAT Reminders
+              </a>
             </div>
+            <p class="subscribe-note">
+              Subscribe to receive weekly CAT 2026 deadline reminders and important event alerts by email.
+            </p>
           </div>
         </section>
 
